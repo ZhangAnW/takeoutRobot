@@ -46,6 +46,8 @@
 uint8_t triggerCnt=0;
 uint16_t echoCnt=0;
 uint8_t periodCnt=0;
+uint8_t CanReceivedata4[4];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,10 +65,7 @@ extern CAN_HandleTypeDef hcan1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim4;
 /* USER CODE BEGIN EV */
-extern uint8_t triggerFlag;
-extern uint8_t triggerCntFlag;
-extern uint8_t echoFlag;
-extern uint8_t echoCntFlag;
+
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -211,10 +210,16 @@ void SysTick_Handler(void)
 void CAN1_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_RX0_IRQn 0 */
-
   /* USER CODE END CAN1_RX0_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan1);
   /* USER CODE BEGIN CAN1_RX0_IRQn 1 */
+	CAN_RxHeaderTypeDef RxMessage;
+	RxMessage.StdId = 1;
+	RxMessage.ExtId = 0x01;
+	RxMessage.IDE = CAN_ID_STD;
+	RxMessage.RTR = CAN_RTR_DATA;
+	RxMessage.DLC = 4;//数据长度
+	HAL_CAN_GetRxMessage(&hcan1,CAN_RX_FIFO0,&RxMessage,CanReceivedata4);
 
   /* USER CODE END CAN1_RX0_IRQn 1 */
 }
@@ -243,15 +248,6 @@ void TIM4_IRQHandler(void)
   /* USER CODE END TIM4_IRQn 0 */
   HAL_TIM_IRQHandler(&htim4);
   /* USER CODE BEGIN TIM4_IRQn 1 */
-	if(triggerCntFlag)
-	{
-		triggerCnt++;
-	}
-	else triggerCnt=0;
-	if(echoCntFlag)
-	{
-		echoCnt++;
-	}
 
   /* USER CODE END TIM4_IRQn 1 */
 }
@@ -266,15 +262,7 @@ int GetPeirodTimeFlag(void)
 	}
 	return 0;
 }
-int GetTriggerTimeFlag(void)
-{
-	if(triggerCnt>=TRIGGERING_TIME)
-	{
-		triggerCnt=0;
-		return 1;
-	}
-	return 0;
-}
+
 
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
