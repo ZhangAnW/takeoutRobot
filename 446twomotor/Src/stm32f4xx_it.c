@@ -214,7 +214,7 @@ void CAN1_RX0_IRQHandler(void)
   HAL_CAN_IRQHandler(&hcan1);
   /* USER CODE BEGIN CAN1_RX0_IRQn 1 */
 	CAN_RxHeaderTypeDef RxMessage;
-	RxMessage.StdId = 1;
+	RxMessage.StdId = 2;
 	RxMessage.ExtId = 0x01;
 	RxMessage.IDE = CAN_ID_STD;
 	RxMessage.RTR = CAN_RTR_DATA;

@@ -132,10 +132,17 @@ int main(void)
   {
 		if(GetPeirodTimeFlag())
 		{
-			Motor1_LEFT_H;
-			Motor1_RIGHT_L;
-			Motor2_LEFT_H;
-			Motor2_RIGHT_H;
+			if(CanReceivedata4[2] == CanReceivedata4[3])
+			{
+				Motor1Lock();
+				Motor2Lock();
+			}
+			else 
+			{
+				Motor1Sleep();
+				Motor2Sleep();
+			}
+				
 		}
     /* USER CODE END WHILE */
 

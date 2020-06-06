@@ -209,7 +209,7 @@ int main(void)
 			if(echoFlag)
 			{
 				CalculateHeight();
-				DataSend();
+//				DataSend();
 				echoCnt=0;
 				echoFlag=0;
 				triggerFlag=0;
@@ -275,15 +275,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void DataSend(void)
-{
-	HAL_UART_Transmit(&huart2,(uint8_t*)"Height: ",8,5);
-	USART_Out_Float(&huart2,height);
-	HAL_UART_Transmit(&huart2,(uint8_t*)"\t\t",2,5);
-	HAL_UART_Transmit(&huart2,(uint8_t*)"Time: ",6,5);
-	USART_Out_Float(&huart2,timems);
-	HAL_UART_Transmit(&huart2,(uint8_t*)"\r\n",2,5);
-}
+//void DataSend(void)
+//{
+//	HAL_UART_Transmit(&huart2,(uint8_t*)"Height: ",8,5);
+//	USART_Out_Float(&huart2,height);
+//	HAL_UART_Transmit(&huart2,(uint8_t*)"\t\t",2,5);
+//	HAL_UART_Transmit(&huart2,(uint8_t*)"Time: ",6,5);
+//	USART_Out_Float(&huart2,timems);
+//	HAL_UART_Transmit(&huart2,(uint8_t*)"\r\n",2,5);
+//}
 void CalculateHeight(void)
 {
 	height=echoCnt*34000/(100000.f*2);	//echoCntµ¥Î»Îª10us
